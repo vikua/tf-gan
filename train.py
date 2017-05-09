@@ -18,6 +18,8 @@ tf.app.flags.DEFINE_float('learning_rate_decay_factor', 0.5, 'Learning rate deca
 
 FLAGS = tf.app.flags.FLAGS
 
+tf.logging.set_verbosity(tf.logging.INFO)
+
 
 def main(_):
     if not FLAGS.data_dir:
@@ -28,7 +30,7 @@ def main(_):
     tf.gfile.MakeDirs(FLAGS.train_dir)
 
     with tf.Graph().as_default():
-        session_conf = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
+        session_conf = tf.ConfigProto(allow_soft_placement=False, log_device_placement=False)
         sess = tf.Session(config=session_conf)
         with sess.as_default():
             dcgan = DCGAN(FLAGS.data_dir, mode='train', batch_size=FLAGS.batch_size)
