@@ -30,7 +30,7 @@ def main(_):
     tf.gfile.MakeDirs(FLAGS.train_dir)
 
     with tf.Graph().as_default():
-        session_conf = tf.ConfigProto(allow_soft_placement=False, log_device_placement=False)
+        session_conf = tf.ConfigProto(allow_soft_placement=False, log_device_placement=True)
         sess = tf.Session(config=session_conf)
         with sess.as_default():
             dcgan = DCGAN(FLAGS.data_dir, mode='train', batch_size=FLAGS.batch_size)
