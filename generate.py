@@ -7,7 +7,7 @@ from model import DCGAN
 
 
 tf.app.flags.DEFINE_string('checkpoint_dir', '/tmp/tensorflow/gan', 'Checkpoint directory')
-tf.app.flags.DEFINE_integer('batch_size', 32, 'Batch size')
+tf.app.flags.DEFINE_integer('batch_size', 4, 'Batch size')
 
 
 FLAGS = tf.app.flags.FLAGS
@@ -37,18 +37,18 @@ def main(_):
 
         saver = tf.train.Saver(variables_to_restore)
 
-        np.random.seed(0)
         random_z = np.random.uniform(-1, 1, [FLAGS.batch_size, 1, 1, 100])
 
         generated_images = run_generator(saver, FLAGS.checkpoint_dir, dcgan, random_z)
 
-        print(generated_images.shape)
+        f, axarr = plt.subplots(2, 2)
+        axarr[0, 0].imshow(generated_images[0].astype(np.uint8))
+        axarr[0, 1].imshow(generated_images[1].astype(np.uint8))
+        axarr[1, 0].imshow(generated_images[2].astype(np.uint8))
+        axarr[1, 1].imshow(generated_images[3].astype(np.uint8))
 
-        img = generated_images[0]
-
-        plt.imshow(img.astype(np.uint8))
-        plt.axis('on')
-        plt.title('Original image = RGB')
+            # plt.axis('on')
+            # plt.title('Original image = RGB')
         plt.show()
 
 
